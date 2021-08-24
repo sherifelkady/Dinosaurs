@@ -9,20 +9,13 @@ function Dino(species, weight, height, diet, where, when, fact) {
   this.fact = fact;
 }
 // Global Objects
+
+// all Dino objects
 const dinoObjects = [];
+// Human Object
 const humanObject = {};
 
 console.log(humanObject);
-
-const mytest = new Dino(
-  "Stegosaurus",
-  11600,
-  79,
-  "herbavor",
-  "North America, Europe, Asia",
-  "Late Jurasic to Early Cretaceous",
-  "The Stegosaurus had between 17 and 22 seperate places and flat spines."
-);
 
 // Compare Weight
 Dino.prototype.compareWeight = function (humanWeight, dinoWeight, dinoName) {
@@ -48,47 +41,58 @@ Dino.prototype.compareHeight = function (humanHeight, dinoHeight, dinoName) {
 
 // Compare Diet
 Dino.prototype.compareDiet = function (humanDiet, dinoDiet) {
-    if (humanDiet === dinoDiet) {
-      return `you and the ${this.species} are ${this.diet}s`;
-    } else {
-      return `While you prefer ${humanDiet}, The ${this.species} prefers a ${dinoDiet}`;
-    } 
-  };
+  if (humanDiet === dinoDiet) {
+    return `you and the ${this.species} are ${this.diet}s`;
+  } else {
+    return `While you prefer ${humanDiet}, The ${this.species} prefers a ${dinoDiet}`;
+  }
+};
 
 Dino.prototype.tile = function () {
-    console.log("this is tile !!!")
+  console.log("this is tile !!!");
 };
 
 // Generate Facts
-Dino.prototype.generateFacts=function() {
+Dino.prototype.generateFacts = function () {
+  let randomNumber = Math.floor(Math.random() * 7);
 
-  let randomNumber = Math.floor(Math.random()*7)
+  if (this.species === "Pigeon") {
+    return this.fact;
+  } else {
     // switch
-    switch(randomNumber) {
-        case 1:
-            return this.compareHeight(humanObject.inches,22, this.species)
+    switch (randomNumber) {
+      case 1:
+        return this.compareHeight(humanObject.inches, 22, this.species);
         break;
-        case 2:
-          return this.compareWeight(humanObject.weight, this.weight, this.species);
+      case 2:
+        return this.compareWeight(
+          humanObject.weight,
+          this.weight,
+          this.species
+        );
         break;
-        case 3 :
-          return this.compareDiet(humanObject.diet, this.diet);
-        
-        case 4:
-          return `The ${this.species} could be found in ${this.where}`;
+      case 3:
+        return this.compareDiet(humanObject.diet, this.diet);
+
+      case 4:
+        return `The ${this.species} could be found in ${this.where}`;
         break;
-        case 5:
-          return `The ${this.species} lived in ${this.when}`;
+      case 5:
+        return `The ${this.species} lived in ${this.when}`;
         break;
-        case 6 :
-          return `${this.fact}`
-        break;  
-        default:
-        return this.compareHeight(humanObject.inches,this.height, this.species)
+      case 6:
+        return this.fact;
+        break;
+      default:
+        return this.compareHeight(
+          humanObject.inches,
+          this.height,
+          this.species
+        );
         break;
     }
-
   }
+};
 
 // get dinasaurces from dino.json
 async function getdata() {
@@ -101,8 +105,8 @@ async function getdata() {
 const generatTiles = async () => {
   let theList = document.getElementById("grid");
   let the_data = await getdata();
-  let getDino = '';
-  const humanTale = `<div class='grid-item'><img src=images/human.png /></div>`
+  let getDino = "";
+  const humanTale = `<div class='grid-item'><img src=images/human.png /></div>`;
 
   the_data.Dinos.forEach((dino, index) => {
     const denoTile = new Dino(
@@ -115,22 +119,21 @@ const generatTiles = async () => {
       dino.fact
     );
 
-    dinoObjects.push(denoTile)
+    dinoObjects.push(denoTile);
     if (index === 4) {
-        getDino += humanTale;
-      }
-      getDino += `<div class='grid-item'>
+      getDino += humanTale;
+    }
+    getDino += `<div class='grid-item'>
         <h3>${denoTile.species}</h3>
         <img src="images/${denoTile.species}.png" />
         <p>${denoTile.generateFacts()}</p>
         </div>
         `;
-        denoTile.tile()
-        console.log(denoTile.generateFacts(1))
+    denoTile.tile();
+    console.log(denoTile.generateFacts(1));
   });
-  
 
-  return theList.innerHTML = getDino;
+  return (theList.innerHTML = getDino);
 };
 
 // Get data from form
@@ -144,7 +147,7 @@ const generatTiles = async () => {
     const inches = document.getElementById("inches").value;
     const weight = document.getElementById("weight").value;
     const diet = document.getElementById("diet").value;
-    Object.assign(humanObject, {name, feet, inches, weight, diet});
+    Object.assign(humanObject, { name, feet, inches, weight, diet });
     form.style.display = "none";
     generatTiles();
   });
