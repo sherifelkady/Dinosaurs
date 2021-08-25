@@ -18,9 +18,9 @@ const humanObject = {};
 console.log(humanObject);
 
 // Compare Weight
-Dino.prototype.compareWeight = function (humanWeight, dinoWeight, dinoName) {
+Dino.prototype.compareWeight = function (humanWeight, dinoWeight) {
   if (humanWeight > dinoWeight) {
-    return `You are weighter than ${dinoName}`;
+    return `You are weighter than ${this.species}`;
   } else if (dinoWeight > humanWeight) {
     return `${dinoName} is weighter than you`;
   } else if (dinoWeight === humanWeight) {
@@ -29,9 +29,9 @@ Dino.prototype.compareWeight = function (humanWeight, dinoWeight, dinoName) {
 };
 
 // Compare Height
-Dino.prototype.compareHeight = function (humanHeight, dinoHeight, dinoName) {
+Dino.prototype.compareHeight = function (humanHeight, dinoHeight) {
   if (humanHeight > dinoHeight) {
-    return `You are taller than ${dinoName}`;
+    return `You are taller than ${this.species}`;
   } else if (dinoHeight > humanHeight) {
     return `${dinoName} is taller than you`;
   } else if (dinoHeight === humanHeight) {
